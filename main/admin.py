@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Brand, Clothes
+from .models import Category, Brand, Clothes, ClothesSize, ClothesColor, ClothesInStock
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -25,6 +25,29 @@ class ClothesAdmin(admin.ModelAdmin):
     list_select_related = ('clothes_brand', 'clothes_category', )
 
 
+class ClothesSizeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'cn', 'eu', 'us')
+    list_display_links = ('id', 'cn')
+    search_fields = ('cn', 'eu', 'us')
+
+
+class ClothesColorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'color_name', 'color_slug')
+    list_display_links = ('id', 'color_name')
+    prepopulated_fields = {'color_slug': ('color_name',)}
+    search_fields = ('color_name', 'color_slug')
+
+
+class ClothesInStockAdmin(admin.ModelAdmin):
+    list_display = ('id', 'clothes', 'clothes_size', 'clothes_color', 'clothes_count')
+    list_display_links = ('id', 'clothes')
+    search_fields = ('clothes__clothes_name',)
+    list_filter = ('clothes', )
+    list_select_related = ('clothes', 'clothes_size', 'clothes_color', )
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Clothes, ClothesAdmin)
+admin.site.register(ClothesSize, ClothesSizeAdmin)
+admin.site.register(ClothesColor, ClothesColorAdmin)
+admin.site.register(ClothesInStock, ClothesInStockAdmin)

@@ -2,10 +2,9 @@ from rest_framework import viewsets, mixins, generics, permissions
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
-from .models import Clothes, Category, Brand
-from .serializers import CategoryListSerializer, CategoryDetailSerializer, UserSerializer, ClothesListSerializer
-from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
-
+from .models import Clothes, Category, Brand, ClothesSize, ClothesColor, ClothesInStock
+from .serializers import CategoryListSerializer, CategoryDetailSerializer, UserSerializer, ClothesListSerializer, ClothesSizeSerializer, ClothesColorSerializer, ClothesInStockSerializer
+from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly, IsClotherOwnerOrReadOnly
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
@@ -38,3 +37,19 @@ class ClothesListViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.
         serializer.save(owner=self.request.user)
         return super().perform_create(serializer)
 
+
+class ClothesSizeListViewSet(viewsets.ModelViewSet):
+    queryset = ClothesSize.objects.all()
+    serializer_class = ClothesSizeSerializer
+    permission_classes = (IsAdminOrReadOnly,)
+
+
+class ClothesColorListViewSet(viewsets.ModelViewSet):
+    queryset = ClothesColor.objects.all()
+    serializer_class = ClothesColorSerializer
+
+
+class ClothesInStockListViewSet(viewsets.ModelViewSet):
+    queryset = ClothesInStock.objects.all()
+    serializer_class = ClothesInStockSerializer
+    permission_classes = (IsClotherOwnerOrReadOnly,)

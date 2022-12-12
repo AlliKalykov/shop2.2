@@ -60,3 +60,48 @@ class Clothes(models.Model):
     class Meta:
         verbose_name = 'Одежда'
         verbose_name_plural = 'Одежда' 
+
+    
+class ClothesSize(models.Model):
+    cn = models.CharField(max_length=10, verbose_name='Китайский размер')
+    eu = models.CharField(max_length=10, verbose_name='Европейский размер')
+    us = models.CharField(max_length=10, verbose_name='Американский размер')
+
+    def __str__(self):
+        return self.cn
+
+    def european_size(self):
+        return self.eu
+    
+    def american_size(self):
+        return self.us
+    
+    class Meta:
+        verbose_name = 'Размер одежды'
+        verbose_name_plural = 'Размеры одежды'
+
+
+class ClothesColor(models.Model):
+    color_name = models.CharField(max_length=100, verbose_name='Название цвета')
+    color_slug = models.SlugField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.color_name
+    
+    class Meta:
+        verbose_name = 'Цвет одежды'
+        verbose_name_plural = 'Цвета одежды'
+
+
+class ClothesInStock(models.Model):
+    clothes = models.ForeignKey(Clothes, on_delete=models.CASCADE, related_name='clothes_in_stock')
+    clothes_size = models.ForeignKey(ClothesSize, on_delete=models.CASCADE, related_name='clothes_in_stock')
+    clothes_color = models.ForeignKey(ClothesColor, on_delete=models.CASCADE, related_name='clothes_in_stock')
+    clothes_count = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.clothes}'
+
+    class Meta:
+        verbose_name = 'Одежда в наличии'
+        verbose_name_plural = 'Одежда в наличии'
