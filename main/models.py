@@ -105,3 +105,17 @@ class ClothesInStock(models.Model):
     class Meta:
         verbose_name = 'Одежда в наличии'
         verbose_name_plural = 'Одежда в наличии'
+
+
+class RSSSubs(models.Model):
+    email = models.EmailField()
+    telegram_id = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'Подписка на RSS'
+        verbose_name_plural = 'Подписки на RSS'
+
