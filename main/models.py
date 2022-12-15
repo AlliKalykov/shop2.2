@@ -108,12 +108,12 @@ class ClothesInStock(models.Model):
 
 
 class RSSSubs(models.Model):
-    email = models.EmailField()
-    telegram_id = models.CharField(max_length=100)
+    email = models.EmailField(null=True, blank=True)
+    telegram_id = models.CharField(max_length=100, null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.email
+        return f'{self.telegram_id}'
 
     class Meta:
         verbose_name = 'Подписка на RSS'

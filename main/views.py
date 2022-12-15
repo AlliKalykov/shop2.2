@@ -1,9 +1,10 @@
 from rest_framework import viewsets, mixins, generics, permissions
-from django.shortcuts import render
+from django.shortcuts import render 
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 
-from .models import Clothes, Category, Brand, ClothesSize, ClothesColor, ClothesInStock
-from .serializers import CategoryListSerializer, CategoryDetailSerializer, UserSerializer, ClothesListSerializer, ClothesSizeSerializer, ClothesColorSerializer, ClothesInStockSerializer
+from .models import Clothes, Category, Brand, ClothesSize, ClothesColor, ClothesInStock, RSSSubs
+from .serializers import CategoryListSerializer, CategoryDetailSerializer, UserSerializer, ClothesListSerializer, ClothesSizeSerializer, ClothesColorSerializer, ClothesInStockSerializer, RSSSubsSerializer
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly, IsClotherOwnerOrReadOnly
 
 class UserListView(generics.ListAPIView):
@@ -53,3 +54,15 @@ class ClothesInStockListViewSet(viewsets.ModelViewSet):
     queryset = ClothesInStock.objects.all()
     serializer_class = ClothesInStockSerializer
     permission_classes = (IsClotherOwnerOrReadOnly,)
+
+
+class RSSSubsViewSet(viewsets.ModelViewSet):
+    queryset = RSSSubs.objects.all()
+    serializer_class = RSSSubsSerializer
+    permission_classes = (permissions.AllowAny,)
+
+
+class RedirectToTelegramBoView(generics.ListAPIView):
+    
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(redirect_to='https://t.me/yrk_rysyaBOT')

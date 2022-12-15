@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Brand, Clothes, ClothesSize, ClothesColor, ClothesInStock
+from .models import Category, Brand, Clothes, ClothesSize, ClothesColor, ClothesInStock, RSSSubs
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -51,3 +51,4 @@ admin.site.register(Clothes, ClothesAdmin)
 admin.site.register(ClothesSize, ClothesSizeAdmin)
 admin.site.register(ClothesColor, ClothesColorAdmin)
 admin.site.register(ClothesInStock, ClothesInStockAdmin)
+admin.site.register(RSSSubs)

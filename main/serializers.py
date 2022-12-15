@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from .models import Category, Brand, Clothes ,ClothesSize, ClothesColor, ClothesInStock
-
+from .models import Category, Brand, Clothes ,ClothesSize, \
+    ClothesColor, ClothesInStock, RSSSubs
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,3 +58,9 @@ class ClothesInStockSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClothesInStock
         fields = ('id', 'clothes', 'clothes_size', 'clothes_color', 'clothes_count')
+
+
+class RSSSubsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RSSSubs
+        fields = ('id', 'email', 'telegram_id', 'name')
